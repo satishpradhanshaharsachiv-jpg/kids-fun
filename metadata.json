@@ -1,0 +1,8 @@
+{
+  "name": "बालमित्र गमतीदार खेळ",
+  "description": "मुलांसाठी रंगीबेरंगी चित्रे आणि मनोरंजक आवाजांनी युक्त एक मजेशीर शैक्षणिक खेळ.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
