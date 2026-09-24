@@ -10,6 +10,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       - name: Build Bundle
         run: ./gradlew bundleRelease
       - name: Upload AAB
@@ -17,4 +19,3 @@ jobs:
         with:
           name: app-release
           path: app/build/outputs/bundle/release/*.aab
-
