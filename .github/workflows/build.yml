@@ -1,23 +1,46 @@
 name: Build AAB
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v5
+
       - name: Set up JDK 17
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: '17'
           distribution: 'temurin'
+
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-      - name: Grant execute permission for gradlew
+        uses: android-actions/setup-android@v4
+
+      - name: Check project files
+        run: |
+          ls -la
+          echo "Checking Gradle wrapper..."
+          test -f gradlew
+
+      - name: Grant execute permission
         run: chmod +x gradlew
-      - name: Build Bundle
-        run: ./gradlew bundleRelease
+
+      - name: Build Release AAB
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Find AAB
+        run: find . -name "*.aab" -type f
+
       - name: Upload AAB
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: app-release
-          path: app/build/outputs/bundle/release/*.aab
+          path: "**/build/outputs/bundle/release/*.aab"
+          if-no-files-found: error
