@@ -2,7 +2,7 @@ name: Build AAB
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    run: ./gradlew app:bundleRelease
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
